@@ -10,7 +10,6 @@ class NoteViewModel: ViewModel() {
     fun save (note: Note){
         pendingNote = note
     }
-
     override fun onCleared(){
         pendingNote?.let {
             NotesRepository.saveNote(it)

@@ -10,8 +10,7 @@ data class Note (
     val title: String = "",
     val text: String = "",
     val color: Color = Color.WHITE,
-    val lastChanged: Date = Date()
-):Parcelable{
+    val lastChanged: Date = Date()):Parcelable{
 
     override fun equals(other: Any?): Boolean{
         if (this === other) return true  // рефересное равенство. Ссылки на объекты равны.

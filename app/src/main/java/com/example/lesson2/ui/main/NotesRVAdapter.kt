@@ -41,6 +41,7 @@ class NotesRVAdapter(val onItemViewClick :((note: Note)-> Unit)? = null): Recycl
                 Note.Color.VIOLET->R.color.violet
                 Note.Color.PINK -> R.color.pink
             }
+
             (this as CardView).setCardBackgroundColor(ContextCompat.getColor(itemView.context, color))
 
             itemView.setOnClickListener{

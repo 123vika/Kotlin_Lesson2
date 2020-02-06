@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener{
           NoteActivity.start(this)
+
         }
     }
 }

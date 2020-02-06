@@ -9,6 +9,7 @@ object NotesRepository{
 
     private val notesLiveData = MutableLiveData<List<Note>>()
     private val notes: MutableList<Note> = mutableListOf(
+
         Note(
             UUID.randomUUID().toString(),
             "Заметка 1",
@@ -63,6 +64,7 @@ object NotesRepository{
                 return
             }
         }
+
         notes.add(note)
     }
 

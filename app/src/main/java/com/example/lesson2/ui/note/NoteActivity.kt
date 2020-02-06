@@ -74,8 +74,10 @@ class NoteActivity: AppCompatActivity() {
             }
             toolbar.setBackgroundColor(ContextCompat.getColor(this,color))
         }
+
         et_title.addTextChangedListener(textChangeListener)
         et_body.addTextChangedListener(textChangeListener)
+
     }
 
     fun saveNote() {
