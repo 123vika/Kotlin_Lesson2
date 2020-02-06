@@ -37,7 +37,6 @@ class NoteActivity: AppCompatActivity() {
         override fun afterTextChanged(s: Editable?) {
             saveNote()
         }
-
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     }
@@ -73,10 +72,8 @@ class NoteActivity: AppCompatActivity() {
                 Note.Color.VIOLET->R.color.violet
                 Note.Color.PINK -> R.color.pink
             }
-
             toolbar.setBackgroundColor(ContextCompat.getColor(this,color))
         }
-
         et_title.addTextChangedListener(textChangeListener)
         et_body.addTextChangedListener(textChangeListener)
     }
