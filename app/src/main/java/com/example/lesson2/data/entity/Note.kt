@@ -1,4 +1,4 @@
-package com.example.lesson2.Data.entity
+package com.example.lesson2.data.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -6,7 +6,7 @@ import java.util.*
 
 @Parcelize
 data class Note (
-    val id: String,
+    val id: String = "",
     val title: String = "",
     val text: String = "",
     val color: Color = Color.WHITE,

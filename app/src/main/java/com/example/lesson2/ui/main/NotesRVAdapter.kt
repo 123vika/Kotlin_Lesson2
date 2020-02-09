@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lesson2.Data.entity.Note
+import com.example.lesson2.data.entity.Note
 import com.example.lesson2.R
 import kotlinx.android.synthetic.main.item_note.view.*
 
