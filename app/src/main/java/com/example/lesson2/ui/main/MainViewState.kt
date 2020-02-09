@@ -1,6 +1,6 @@
 package com.example.lesson2.ui.main
 
-import com.example.lesson2.Data.entity.Note
+import com.example.lesson2.data.entity.Note
+import com.example.lesson2.ui.base.BaseViewState
 
-data class MainViewState (val notes: List<Note>)//в реальной жизни будут все данные,
-                                                // которые нужны нашему экрану
+class MainViewState (val notes: List<Note>? = null, error: Throwable? = null): BaseViewState<List<Note>?>(notes, error)
