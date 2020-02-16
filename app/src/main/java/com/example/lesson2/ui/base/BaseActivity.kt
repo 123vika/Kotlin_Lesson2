@@ -1,17 +1,27 @@
 package com.example.lesson2.ui.base
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.example.lesson2.R
+import com.example.lesson2.data.entity.errors.NoAuthException
+import com.firebase.ui.auth.AuthUI
 
 abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity(){
+
+    companion object{
+        const val RC_SIGN_IN = 4242
+    }
+
     abstract val viewModel: BaseViewModel<T, S>
-    abstract val layoutRes: Int
+    abstract val layoutRes: Int?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutRes)
+        layoutRes?.let { setContentView(it)}
         viewModel.getViewState().observe(this, object : Observer<S> {
             override fun onChanged (t: S?){
                 t ?: return
@@ -26,7 +36,33 @@ abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity(){
     abstract fun renderData(data: T)
 
     private fun renderError(error: Throwable) {
-        error.message?.let { showError(it) }
+        when(error){
+            is NoAuthException -> startLogin()
+            else ->  error.message?.let { showError(it) }
+        }
+
+    }
+
+    private fun startLogin() {
+        val providers = listOf(
+            AuthUI.IdpConfig.GoogleBuilder().build()
+            //AuthUI.IdpConfig.FacebookBuilder().build()
+        )
+        startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setLogo(R.drawable.android_robot)
+                .setTheme(R.style.LoginStyle)
+                .setAvailableProviders(providers)
+                .build(),
+            RC_SIGN_IN
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_SIGN_IN && resultCode != Activity.RESULT_OK){
+            finish()
+        }
     }
 
     protected fun showError(error: String){
