@@ -1,5 +1,6 @@
 package com.example.lesson2.data.provider
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.lesson2.data.entity.Note
 import com.example.lesson2.data.entity.User
@@ -9,17 +10,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FireStoreProvider : RemoteDataProvider {
+class FireStoreProvider(private val firebaseAuth: FirebaseAuth,private val store:FirebaseFirestore) : RemoteDataProvider {
 
     companion object{
         private const val NOTES_COLLECTION = "notes"
         private const val USER_COLLECTION = "users"
     }
 
-    private val store by lazy { FirebaseFirestore.getInstance() }
-
     private val currentUser
-        get() = FirebaseAuth.getInstance().currentUser
+        get() = firebaseAuth.currentUser
 
     private val userNotesCollEction: CollectionReference
     get() = currentUser?.let {
@@ -32,7 +31,7 @@ class FireStoreProvider : RemoteDataProvider {
         }
     }
 
-    override fun subsrcibeToAllNotes()= MutableLiveData<NoteResult>().apply {
+    override fun subscrcibeToAllNotes()= MutableLiveData<NoteResult>().apply {
         try {
             userNotesCollEction.addSnapshotListener{ snapshot, e ->
                 e?.let{
@@ -75,4 +74,16 @@ class FireStoreProvider : RemoteDataProvider {
         }
     }
 
+    override fun deleteNote(noteId: String): LiveData<NoteResult> = MutableLiveData<NoteResult>().apply {
+        try {
+            userNotesCollEction.document(noteId).delete()
+                .addOnSuccessListener {
+                    value = NoteResult.Success(null)
+                }.addOnFailureListener{
+                    value = NoteResult.Error(it)
+                }
+        }catch (e: Throwable){
+            value = NoteResult.Error(e)
+        }
+    }
 }

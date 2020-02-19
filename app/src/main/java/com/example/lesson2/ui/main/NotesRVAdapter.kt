@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lesson2.data.entity.Note
 import com.example.lesson2.R
+import com.example.lesson2.common.getColorInt
 import kotlinx.android.synthetic.main.item_note.view.*
 
 class NotesRVAdapter(val onItemViewClick :((note: Note)-> Unit)? = null): RecyclerView.Adapter<NotesRVAdapter.ViewHolder>(){
@@ -32,17 +33,7 @@ class NotesRVAdapter(val onItemViewClick :((note: Note)-> Unit)? = null): Recycl
             tv_title.text = note.title
             tv_text.text = note.text
 
-            val color = when(note.color){
-                Note.Color.WHITE ->R.color.white
-                Note.Color.YELLOW ->R.color.yellow
-                Note.Color.GREEN ->R.color.green
-                Note.Color.BLUE -> R.color.blue
-                Note.Color.RED -> R.color.red
-                Note.Color.VIOLET->R.color.violet
-                Note.Color.PINK -> R.color.pink
-            }
-
-            (this as CardView).setCardBackgroundColor(ContextCompat.getColor(itemView.context, color))
+            (this as CardView).setCardBackgroundColor(note.color.getColorInt(context))
 
             itemView.setOnClickListener{
                 onItemViewClick?.invoke(note)
