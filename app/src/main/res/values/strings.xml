@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Lesson2</string>
+    <string name="important_notes">Очень важная заметка</string>
+    <string name="long_text_of_important_notes">Длинный предлинный текст важной заметки</string>
+    <string name="notes_app">Notes App</string>
+    <string name="title">Заголовок</string>
+    <string name="text_of_notes">Текст заметки</string>
+    <string name="new_note_title">Новая заметка</string>
 </resources>
